@@ -1,28 +1,14 @@
 Jenkinsfile (Declarative Pipeline)
 pipeline {
-    agent { docker { image 'php' } }
+    agent {
+        docker { image 'node:7-alpine' }
+    }
     stages {
-        stage('build') {
+        stage('Test') {
             steps {
-                sh 'php --version'
-                sh '''
-                    echo "Multiline shell steps works too"
-                '''
+                sh 'node --version'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                retry(3) {
-                    sh 'echo "retry if fails"'
-                }
-
-                timeout(time: 3, units: 'MINUTES') {
-                    sh 'echo "time out in 3 mins"'
-                }
-            }
-        }
-
     }
 
     post {
